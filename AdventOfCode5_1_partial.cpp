@@ -13,7 +13,7 @@ int getNumber(char);
 void popVec(int, int, vector<vector<int>>);
 void pushpop(int, int, int, std::vector<std::vector<int>> &);
 void printVector(int, int, std::vector<std::vector<int>>);
-void getNumberFromString(string); 
+std::vector<int> getNumberFromString(string);
 // void printAfter(int , int , std::vector<std::vector<int>> );
 
 int main()
@@ -22,13 +22,15 @@ int main()
     ifstream inFil;
     inFil.open("/Users/ndi01/Downloads/assignment_AdventOfCode5.txt");
     std::string lineRead;
+    std::vector<std::vector<int>> lineNumsAll;
     if (inFil.is_open())
     {
         cout << "FILE OPEN " << endl;
         while (std::getline(inFil, lineRead))
         {
-            getNumberFromString(lineRead);
-            //cout << lineRead << endl;
+
+            lineNumsAll.push_back(getNumberFromString(lineRead));
+            
         }
     }
 
@@ -63,12 +65,14 @@ int main()
         }
     }
 
-    pushpop(2, 6, 1, myvector_copy);
-    /*move 1 from 4 to 8 */
-    printVector(3, 7, myvector_copy);
-    pushpop(1, 3, 7, myvector_copy);
-    pushpop(2, 0, 8, myvector_copy);
-    printVector(3, 7, myvector_copy);
+    for (int k = 0; k < lineNumsAll.size(); ++k)
+    {
+        pushpop(lineNumsAll[k][0], lineNumsAll[k][1] - 1, lineNumsAll[k][2] - 1, myvector_copy);
+    }
+
+    for (int f = 0; f < myvector_copy.size(); ++f)
+        cout << myvector_copy[f].back() << "\n " << endl;
+             
 
     return 0;
 }
@@ -84,54 +88,25 @@ void printVector(int rowFrom, int rowTo, std::vector<std::vector<int>> someVec)
     {
         cout << "myvector_copy[" << rowTo << "][" << j << "]: " << someVec[rowTo][j] << endl;
     }
-    for (int z = 0; z < 9; ++z)
-    {
-        cout << "Top element of each crate : " << z + 1 << " is : " << someVec[z].back() << endl;
-    }
 }
 
-void getNumberFromString(string str)
+std::vector<int> getNumberFromString(string str)
 {
     stringstream ss;
- 
-    /* Storing the whole string into string stream */
     ss << str;
- 
-    /* Running loop till the end of the stream */
     string temp;
     int found;
-    while (!ss.eof()) {
- 
-        /* extracting word by word from stream */
+    std::vector<int> vecInt;
+    while (!ss.eof())
+    {
         ss >> temp;
- 
-        /* Checking the given word is integer or not */
         if (stringstream(temp) >> found)
-            cout << found << " ";
- 
-        /* To save from space at the end of string */
-        temp = " ";
+            vecInt.push_back(found);
+            
     }
+    return vecInt;
 }
 
-/* void getNumberFromString(string s) {
-   stringstream str_strm;
-   str_strm << s; //convert the string s into stringstream
-   string temp_str;
-   int temp_int;
-   while(!str_strm.eof()) {
-      str_strm >> temp_str; //take words into temp_str one by one
-      if(stringstream(temp_str) >> temp_int) { //try to convert string to int
-         cout << temp_int << " ";
-      }
-      temp_str = ""; //clear temp string
-   }
-} */ 
-
-/* Eg: move 2 from 7 to 2 */
-/* which means move 2 from 6 to 1 */
-/* repeat the below six lines as many times as the number of moves requested */
-/* so in this case, it is repeating twice since we move 2 */
 void pushpop(int number, int fromQueue, int toQueue, std::vector<std::vector<int>> &myvec)
 {
     /* create a vector of vectors to store the pops and pushes */
@@ -152,14 +127,6 @@ void pushpop(int number, int fromQueue, int toQueue, std::vector<std::vector<int
         int val2 = temp[fromQueue].back();
         temp[fromQueue].pop_back();
         myvec[toQueue].push_back(val2);
-    }
-}
-
-void popVec(int num, int row, vector<vector<int>> &myvector_copy)
-{
-    for (int i = 0; i < num; ++i)
-    {
-        myvector_copy[row].pop_back();
     }
 }
 
@@ -192,16 +159,3 @@ int getNumber(char val)
         return mapObject_u.find(val)->second;
     }
 }
-
-/* int count = 0;
-    for (int i = 0; i < myvector_copy.size(); ++i)
-    {
-        for (int j = 0; j < myvector_copy[i].size(); ++j)
-        {
-
-            cout << myvector_copy[i][j] << endl;
-            count++;
-        }
-    }
-
-    cout << "count: " << count << endl;*/
