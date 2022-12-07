@@ -11,7 +11,7 @@ using namespace std;
 int getNumber(char);
 void popVec(int, int, vector<vector<int>>);
 void pushpop(int, int, int, std::vector<std::vector<int>> &);
-void printVector(int , int , std::vector<std::vector<int>> );
+void printVector(int, int, std::vector<std::vector<int>>);
 // void printAfter(int , int , std::vector<std::vector<int>> );
 
 int main()
@@ -52,36 +52,30 @@ int main()
         }
     }
 
-    
-
     pushpop(2, 6, 1, myvector_copy);
     /*move 1 from 4 to 8 */
-    printVector(3,7, myvector_copy);
+    printVector(3, 7, myvector_copy);
     pushpop(1, 3, 7, myvector_copy);
     pushpop(2, 0, 8, myvector_copy);
-    printAfter(3,7, myvector_copy);
-
-   
+    printVector(3, 7, myvector_copy);
 
     return 0;
 }
 
-
 void printVector(int rowFrom, int rowTo, std::vector<std::vector<int>> someVec)
+{
+    cout << " -------------------------------------------------" << endl;
+    for (int j = 0; j < someVec[rowFrom].size(); ++j)
     {
-
-        cout << "*******BEFORE MOVE *****'" << endl;
-        for (int j = 0; j < someVec[rowFrom].size(); ++j)
-        {
-            cout << "myvector_copy[" << rowFrom << "][" << j << "]: " << someVec[rowFrom][j] << endl;
-        }
-        for (int j = 0; j < someVec[rowTo].size(); ++j)
-        {
-            cout << "myvector_copy[" << rowTo << "][" << j << "]: " << someVec[rowTo][j] << endl;
-        }
+        cout << "myvector_copy[" << rowFrom << "][" << j << "]: " << someVec[rowFrom][j] << endl;
     }
-
-
+    for (int j = 0; j < someVec[rowTo].size(); ++j)
+    {
+        cout << "myvector_copy[" << rowTo << "][" << j << "]: " << someVec[rowTo][j] << endl;
+    }
+    for (int z = 0; z < 9; ++z){ cout << "Top element of each crate : " << z+1 << " is : " << someVec[z].back() << endl; }
+    
+}
 
 /* Eg: move 2 from 7 to 2 */
 /* which means move 2 from 6 to 1 */
