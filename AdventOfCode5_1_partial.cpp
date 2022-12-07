@@ -6,16 +6,32 @@
 #include <iterator>
 #include <map>
 #include <set>
+#include <sstream>
 using namespace std;
 
 int getNumber(char);
 void popVec(int, int, vector<vector<int>>);
 void pushpop(int, int, int, std::vector<std::vector<int>> &);
 void printVector(int, int, std::vector<std::vector<int>>);
+void getNumberFromString(string); 
 // void printAfter(int , int , std::vector<std::vector<int>> );
 
 int main()
 {
+
+    ifstream inFil;
+    inFil.open("/Users/ndi01/Downloads/assignment_AdventOfCode5.txt");
+    std::string lineRead;
+    if (inFil.is_open())
+    {
+        cout << "FILE OPEN " << endl;
+        while (std::getline(inFil, lineRead))
+        {
+            getNumberFromString(lineRead);
+            //cout << lineRead << endl;
+        }
+    }
+
     std::vector<std::vector<int>> myvector_copy(9, std::vector<int>(8, 100)), myvector_copy1(9, std::vector<int>(8, 100));
     std::vector<std::vector<char>> myvector = {
         {'H', 'T', 'Z', 'D'},
@@ -29,11 +45,6 @@ int main()
         {'B', 'H', 'G', 'N', 'F', 'Z', 'L', 'D'}
 
     };
-
-    for (int k = 0; k < myvector.size(); ++k)
-    {
-        // cout << " myvector[i].size() : " << myvector[k].size() << endl;
-    }
 
     for (int i = 0; i < myvector.size(); ++i)
     {
@@ -73,9 +84,49 @@ void printVector(int rowFrom, int rowTo, std::vector<std::vector<int>> someVec)
     {
         cout << "myvector_copy[" << rowTo << "][" << j << "]: " << someVec[rowTo][j] << endl;
     }
-    for (int z = 0; z < 9; ++z){ cout << "Top element of each crate : " << z+1 << " is : " << someVec[z].back() << endl; }
-    
+    for (int z = 0; z < 9; ++z)
+    {
+        cout << "Top element of each crate : " << z + 1 << " is : " << someVec[z].back() << endl;
+    }
 }
+
+void getNumberFromString(string str)
+{
+    stringstream ss;
+ 
+    /* Storing the whole string into string stream */
+    ss << str;
+ 
+    /* Running loop till the end of the stream */
+    string temp;
+    int found;
+    while (!ss.eof()) {
+ 
+        /* extracting word by word from stream */
+        ss >> temp;
+ 
+        /* Checking the given word is integer or not */
+        if (stringstream(temp) >> found)
+            cout << found << " ";
+ 
+        /* To save from space at the end of string */
+        temp = " ";
+    }
+}
+
+/* void getNumberFromString(string s) {
+   stringstream str_strm;
+   str_strm << s; //convert the string s into stringstream
+   string temp_str;
+   int temp_int;
+   while(!str_strm.eof()) {
+      str_strm >> temp_str; //take words into temp_str one by one
+      if(stringstream(temp_str) >> temp_int) { //try to convert string to int
+         cout << temp_int << " ";
+      }
+      temp_str = ""; //clear temp string
+   }
+} */ 
 
 /* Eg: move 2 from 7 to 2 */
 /* which means move 2 from 6 to 1 */
